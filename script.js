@@ -15,7 +15,16 @@ function appendToDisplay(value) {
 
 function calculateResult() {
   try {
-    display.value = eval(display.value.replace('√', 'Math.sqrt').replace('^', '**'));
+    let expression = display.value;
+
+    // Replace square root symbols with Math.sqrt()
+    expression = expression.replace(/√(\d+)/g, 'Math.sqrt($1)');
+
+    // Replace power symbols (^) with exponentiation (**)
+    expression = expression.replace(/\^/g, '**');
+
+    // Evaluate the expression
+    display.value = eval(expression);
   } catch (e) {
     display.value = 'Error';
   }
